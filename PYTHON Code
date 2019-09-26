@@ -1,0 +1,47 @@
+hist = [2,4,1,3, 8, 6, 4,0,1,6,2] #histrogram inputs
+prev = None
+s_count = 0 
+a = list()
+sum_t=0
+j=0
+#Calculates the water volume for a section of histogram
+def sum_f(lt):
+    min=0
+    sum_elem=0
+    leng = len(lt)
+    print(lt)
+    if len(lt) == 0 : return 0
+    else:
+        sum_elem=0
+        if lt[0]<=lt[leng-1]: min = lt[0]
+        else : min= lt[leng-1]
+        for num in lt:
+            sum_elem = sum_elem + num
+        return min*(leng-2)-(sum_elem-lt[0]-lt[leng-1])
+
+for i in hist :
+    j+=1
+    if prev is None:
+        prev = i
+        a.append(i)
+        continue 
+    sign = prev - i
+    prev = i
+    if sign >= 0 :
+        if s_count ==0 :
+            a.append(i)
+            s_count = 0
+        elif s_count ==1:
+            s_count = 2       
+    else :
+        s_count= 1
+        a.append(i)
+    if s_count ==2 or j==len(hist):
+        sum_r = sum_f(a)
+        sum_t = sum_r + sum_t
+        s_count = 0
+        sec_last = a[(len(a)-1)]
+        a.clear()
+        a.append(sec_last)
+        a.append(i)
+print(sum_t)
